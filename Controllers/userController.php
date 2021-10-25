@@ -26,3 +26,4 @@ function signin()
         $userModel->signin($login, $pwd);
     }
 }
+

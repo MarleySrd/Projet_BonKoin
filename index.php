@@ -12,8 +12,8 @@ if(isset($_GET['login'])){
 }
 
 if (isset($_GET['signin'])){
-   
     require_once(__DIR__.'/Controllers/userController.php');
+    
 }
 
 

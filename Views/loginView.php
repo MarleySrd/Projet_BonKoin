@@ -1,4 +1,5 @@
 <?php include(__DIR__ . '/header.php'); ?>
+
 <body>
     <div class="container">
         <div class="row">
@@ -13,12 +14,6 @@
                         <div class="col-12">
                             <label>Password</label>
                             <input type="password" name="pwd" class="form-control" placeholder="Entrez votre mot de passe">
-                        </div>
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe"> Se souvenir de moi</label>
-                            </div>
                         </div>
                         <div class="col-12">
 
