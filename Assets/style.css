@@ -1,11 +1,22 @@
+.logoAccount{
+    width: 30px;
+}
+
 .card{
     width: 300px;
     max-height: 100%;
 }
+.card a{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+.card p{
+    text-decoration: none;
+}
 .card .descCard{
-    max-height: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    height: 100px;
+    overflow:scroll;
 }
 ::-webkit-scrollbar{
     display: none;

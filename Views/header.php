@@ -17,5 +17,5 @@
   <!-- Favicon -->
   <!-- <link rel="icon" type="image/gif" href="./assets/icons/favicon.svg" /> -->
   <!-- CSS -->
-  <link href="./assets/style.css" rel="stylesheet">
+  <link href="../assets/style.css" rel="stylesheet">
 </head>
