@@ -1,0 +1,12 @@
+.card{
+    width: 300px;
+    max-height: 100%;
+}
+.card .descCard{
+    max-height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+::-webkit-scrollbar{
+    display: none;
+}

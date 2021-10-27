@@ -7,20 +7,7 @@
 //Nous allons vérifier si une variable de session connected existe auquel cas on va laisser l'utilisateur accéder à cette page
 // $_SESSION['connected']=true;
 
-<<<<<<< HEAD
-if(isset($_GET['login'])){
-    require_once(__DIR__.'/Controllers/userController.php');
-    login();
-}
-
-if (isset($_GET['signin'])){
-    require_once(__DIR__.'/Controllers/userController.php');
-    
-}
-
-=======
 require_once(__DIR__ . '/Controllers/annonceController.php');
 listAnnonce();
->>>>>>> 07466d88da8781e24d29e091e3f9b0abd8382038
 
 ?>
