@@ -26,5 +26,5 @@ ob_start();
     <?php
     $loopAnnonces =  ob_get_clean();
     // ob_get_clean — Lit le contenu courant du tampon de sortie puis l'efface
-    require_once('skeleton.php');
+    require_once('template.php');
     ?>
