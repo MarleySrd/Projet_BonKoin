@@ -16,13 +16,13 @@
                             <input type="password" name="pwd" class="form-control" placeholder="Entrez votre mot de passe">
                         </div>
                         <div class="col-12">
-                            <input type="submit" class="btn btn-dark float-end" value="S'inscrire">                            
+                            <input type="submit" class="btn btn-dark float-end" value="S'inscrire">
                         </div>
                     </form>
-                    <hr class="mt-4">  
+                    <hr class="mt-4">
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 
 </body>
