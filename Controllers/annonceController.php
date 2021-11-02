@@ -1,12 +1,35 @@
 <?php
-require_once(__DIR__ . '/../Models/AnnonceModel.php');
+require_once (__DIR__ . '/../Models/AnnonceModel.php');
+$annonceModel = new AnnonceModel();
 
-function listAnnonce(){
-    //$annonceModel = new AnnonceModel();
-   // $listAnnonces = $annonceModel->listAnnonce();
-
-    require(__DIR__ . '/../views/listView.php');
-    exit;
-
+function searchAnnonces()
+{
+    global $annonceModel;
+    // les annonces d'une categorie, les annonces d'un user ou une recherche passent par la méthode search du modele
+    $annoncesList = $annonceModel->searchAnnonces();
+    require_once (__DIR__ . '/../Views/listAnnoncesView.php');
+    exit();
 }
 
+function listCategories()
+{
+    global $annonceModel;
+    $listCategories = $annonceModel->listCategories();
+    require_once (__DIR__ . '/../Views/home.php');
+}
+
+function newAnnonce()
+{
+    global $annonceModel;
+    $listCategories = $annonceModel->listCategories();
+    if (isset($_POST['submit'])) {
+        $errors = $annonceModel->newAnnonce();
+        if ($errors) {
+            require_once (__DIR__ . '/../Views/newAnnonceView.php');
+        } else {
+            require_once (__DIR__ . '/../Views/home.php');
+        }
+    } else {
+        require_once (__DIR__ . '/../Views/newAnnonceView.php');
+    }
+}
