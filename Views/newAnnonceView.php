@@ -11,7 +11,7 @@ ob_start();
 			<div class="divider-custom-line"></div>
 		</div>
 
-		<form action="?new" method="post">
+		<form action="?new" method="post" enctype="multipart/form-data">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-xl-5">
 
@@ -47,7 +47,7 @@ ob_start();
 
 					<!-- add js for zip codes -->
 					<div class="form-floating mb-3">
-						<input class="form-control" id="photos" type="file" name="photos_annonce[]" placeholder="Adresse de l'annonce" multiple/>
+						<input class="form-control" id="photos" type="file" name="photos_annonce[]" placeholder="Ajoutez des photos à votre annonce" multiple/>
 						<label for="photos">Photos de l'annonce</label>
 					</div>
 
