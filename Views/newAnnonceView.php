@@ -67,17 +67,6 @@ ob_start();
 							<div class="invalid-feedback"><?= $errors['errors']['adresse_annonce']; ?></div>
 						<?php } ?>
 					</div>
-
-					<!-- add js for zip codes -->
-					<div class="form-floating mb-3">
-						<input class="form-control" id="adresse" type="text" name="adresse_annonce" placeholder="Adresse de l'annonce" value="<?php if (isset($errors['value']['adresse_annonce'])) {
-																																					echo $errors['value']['adresse_annonce'];
-																																				} ?>" />
-						<label for="adresse">Adresse de l'annonce</label>
-						<?php if (isset($errors['errors']['adresse_annonce'])) { ?>
-							<div class="invalid-feedback"><?= $errors['errors']['adresse_annonce']; ?></div>
-						<?php } ?>
-					</div>
 				</div>
 				<div class="col-lg-6 col-xl-5"></div>
 			</div>
@@ -196,11 +185,7 @@ ob_start();
 					<!-- <div class="d-none" id="submitErrorMessage">
 						<div class="text-center text-danger mb-3">Error sending message!</div>
 					</div> -->
-<<<<<<< HEAD
-					<button class="btn btn-primary btn-xl" id="submitButton" name="submit" type="submit">Déposer l'annonce</button>
-=======
 					<button class="btn btn-primary btn-lg" id="submitButton" name="submit" type="submit">Déposer l'annonce</button>
->>>>>>> 68be835ee4b5b7bdd100c58e9526f3d3bcb52479
 				</div>
 			</div>
 		</form>

@@ -10,7 +10,7 @@ ob_start();
 		foreach ($annoncesList as $annonce) {
 		?>
 			<div class="card m-2">
-				<img class="card-img-top img-fluid" src="Assets/img/annonces/<?= $annonce['id_annonce'] ?>.png" alt="<?= $annonce['titre_annonce'] ?>">
+				<img class="card-img-top img-fluid" src="Assets/img/uploads/1.<?= $annonce['id_annonce'] ?>.png" alt="<?= $annonce['titre_annonce'] ?>">
 				<div class="card-body">
 					<h5 class="card-title"><?= $annonce['titre_annonce'] ?></h5>
 					<p class="card-text"><?= $annonce['desc_annonce'] ?></p>

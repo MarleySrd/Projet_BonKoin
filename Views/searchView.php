@@ -50,6 +50,8 @@ ob_start();
 	</div>
 </section>
 
+
+
 <?php
 $content = ob_get_clean();
 $pageTitle = "Recherche annonce";

@@ -238,7 +238,7 @@ class AnnonceModel extends Database
             foreach ($_FILES['photos_annonce']['tmp_name'] as $file => $image) {
                 $i = 1;
                 $valid_formats = ["jpg", "png", "gif", "bmp"];
-                $path = "./Assets/uploads/";
+                $path = "./Assets/img/uploads/";
                 $fileName = $_FILES['photos_annonce']['name'][$file];
                 $tmpName = $_FILES['photos_annonce']['tmp_name'][$file];
 
