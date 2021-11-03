@@ -1,9 +1,8 @@
 <?php
-// page affichant la liste des annonces $annoncesList
+
 ob_start();
 ?>
-
-<section class="page-section" id="contact">
+<section class="page-section new-annonce" id="contact">
 	<div class="container">
 		<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">
 			Déposer une annonce</h2>
@@ -45,10 +44,28 @@ ob_start();
 						<?php } ?>
 					</div>
 
-					<!-- add js for zip codes -->
-					<div class="form-floating mb-3">
-						<input class="form-control" id="photos" type="file" name="photos_annonce[]" placeholder="Ajoutez des photos à votre annonce" multiple/>
+					<input class="form-control" id="photos" type="file" name="photos_annonce[]" placeholder="Ajoutez des photos à votre annonce" multiple/>
 						<label for="photos">Photos de l'annonce</label>
+
+					<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+					<script src="https://vicopo.selfbuild.fr/vicopo.min.js"></script>
+					<div class="form-floating mb-3">
+						<input class="form-control"
+						id="adresse" type="text" 
+						name="adresse_annonce" 
+						placeholder="Entrer une ville ou un code postal" 
+						value="<?php if (isset($errors['value']['adresse_annonce'])) {	echo $errors['value']['adresse_annonce'];} ?>" />
+						<ul>
+							<!--Affichage de la liste à partir de 2 caractères saisis-->
+							<li data-vicopo="#adresse" data-vicopo-click='{"#adresse": "code - ville"}'>
+								<strong data-vicopo-code-postal></strong>
+								<span data-vicopo-ville></span>
+							</li>
+						</ul>
+						<label for="adresse">Adresse de l'annonce</label>
+						<?php if (isset($errors['errors']['adresse_annonce'])) { ?>
+							<div class="invalid-feedback"><?= $errors['errors']['adresse_annonce']; ?></div>
+						<?php } ?>
 					</div>
 
 					<!-- add js for zip codes -->
@@ -153,25 +170,37 @@ ob_start();
 					</div>
 
 					<!-- informatique -->
-					<div class="form-floating mb-3" style="display: none;" id="etat">
-						<select class="form-select" name="critere_etat">
-							<option value="Neuf">Neuf</option>
-							<option value="Très bon état">Très bon état</option>
-							<option value="Bon état">Bon état</option>
-							<option value="Etat satisfaisant">Etat satisfaisant</option>
-							<option value="Pour pièces">Pour pièces</option>
-						</select> <label for="etat">Etat</label>
+					<div class="" style="display: none;" id="etat">
+						<div class="row align-items-center">
+							<div class="col-2">
+								<a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i class="fas fa-question-circle"></i></a>
+							</div>
+							<div class="col-10 form-floating mb-3">
+								<select class="form-select" name="critere_etat">
+									<option value="Neuf">Neuf</option>
+									<option value="Très bon état">Très bon état</option>
+									<option value="Bon état">Bon état</option>
+									<option value="Etat satisfaisant">Etat satisfaisant</option>
+									<option value="Pour pièces">Pour pièces</option>
+								</select><label for="etat">Etat</label>
+							</div>
+						</div>
 					</div>
 				</div>
-
 			</div>
+
+
 
 			<div class="row justify-content-center">
 				<div class="col-lg-4 col-xl-3">
 					<!-- <div class="d-none" id="submitErrorMessage">
 						<div class="text-center text-danger mb-3">Error sending message!</div>
 					</div> -->
+<<<<<<< HEAD
 					<button class="btn btn-primary btn-xl" id="submitButton" name="submit" type="submit">Déposer l'annonce</button>
+=======
+					<button class="btn btn-primary btn-lg" id="submitButton" name="submit" type="submit">Déposer l'annonce</button>
+>>>>>>> 68be835ee4b5b7bdd100c58e9526f3d3bcb52479
 				</div>
 			</div>
 		</form>
@@ -215,8 +244,40 @@ ob_start();
 	updateCategories();
 </script>
 
+
+
+
+<!--Modale guide des états-->
+<div class="modal" id="helpModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Guide de l'état du bien à vendre</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul>
+					<li><strong>État neuf : </strong>Bien non-utilisé, complet, avec emballage non ouvert et notice(s) d’utilisation.</li>
+					<li><strong>Très bon état : </strong>Bien pas ou peu utilisé, sans aucun défaut ni rayure, complet et en parfait état de fonctionnement.</li>
+					<li><strong>Bon état : </strong>Bien en parfait état de fonctionnement, comportant quelques petits défauts (mentionnés
+						dans l’annonce et visibles sur les photos).</li>
+					<li><strong>État satisfaisant : </strong>Bien en état de fonctionnement correct, comportant des défauts et signes d’usure
+						manifestes (mentionnés dans l’annonce et visibles sur les photos).</li>
+					<li><strong>Pour pièces : </strong>Bien non fonctionnel, pour restauration complète ou récupération de pièces détachées.</li>
+				</ul>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Fin modale guide des états-->
+
 <?php
 $content = ob_get_clean();
 $pageTitle = "Nouvelle annonce";
+$pageDescription = "Nouvelle annonce";
 require(__DIR__ . '/template.php');
 ?>

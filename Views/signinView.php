@@ -41,7 +41,7 @@ ob_start();
 					<!-- <div class="d-none" id="submitErrorMessage">
 						<div class="text-center text-danger mb-3">Error sending message!</div>
 					</div> -->
-					<button class="btn btn-primary btn-xl" id="submitButton"
+					<button class="btn btn-primary me-2 " id="submitButton"
 						type="submit">S'inscrire</button>
 				</form>
 			</div>
@@ -53,6 +53,7 @@ ob_start();
 <?php
 $content = ob_get_clean();
 $pageTitle = "Inscription";
+$pageDescription= "Page d'inscription pour site du bon koin";
 require (__DIR__ . '/template.php');
 ?>
 
