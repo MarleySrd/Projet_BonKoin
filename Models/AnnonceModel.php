@@ -233,10 +233,10 @@ class AnnonceModel extends Database
             }
         }
         // IMAGES INSERT
-
+        $i = 1;
         if (isset($_POST['submit'])) {
             foreach ($_FILES['photos_annonce']['tmp_name'] as $file => $image) {
-                $i = 1;
+                $randomNumber = $i++;
                 $valid_formats = ["jpg", "png", "gif", "bmp"];
                 $path = "./Assets/img/uploads/";
                 $fileName = $_FILES['photos_annonce']['name'][$file];
@@ -245,12 +245,12 @@ class AnnonceModel extends Database
                 if (strlen($fileName)) {
                     $fileExt = "." . strtolower(substr(strrchr($fileName, '.'), 1));
                     if (!in_array($fileExt, $valid_formats)) {
-                        $uniqueName = $i++ . "." . $annonceId;
+                        $uniqueName = $randomNumber . "." . $annonceId;
                         $fileNamee = $uniqueName . $fileExt;
                         move_uploaded_file($tmpName, $path . $fileNamee);
                     }
                 }
-                $i++;
+                
             }
         }
     }
