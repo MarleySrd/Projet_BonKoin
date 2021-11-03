@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 // page affichant la recherche des annonces
 ob_start();
@@ -58,3 +59,5 @@ $pageTitle = "Recherche annonce";
 $pageDescription = "Recherche annonce";
 require(__DIR__ . '/template.php');
 ?>
+=======
+>>>>>>> 86b0ec96c1b68d16be70e34e1fefee983149d034
