@@ -254,33 +254,26 @@ class AnnonceModel extends Database
                 $q->execute();
             }
         }
-        return false;
-
         // IMAGES INSERT
 
-        $sql = 'INSERT INTO photo (id_annonce) VALUES (:id_annonce)';
-        $query = $db->prepare($sql);
-        $query->bindValue(':id_annonce', $annonceId, PDO::PARAM_STR);
+        if (isset($_POST['submit'])) {
+            foreach ($_FILES['photos_annonce']['tmp_name'] as $file => $image) {
+                $i = 1;
+                $valid_formats = ["jpg", "png", "gif", "bmp"];
+                $path = "./Assets/uploads/";
+                $fileName = $_FILES['photos_annonce']['name'][$file];
+                $tmpName = $_FILES['photos_annonce']['tmp_name'][$file];
 
-        foreach ($_FILES['uploaded_file']['tmp_name'] as $file => $image) {
-
-            $validExt = ['.jpg', '.jpeg', '.png'];
-
-            // Vérifie si les fichiers sont bien des images
-            $fileName = $_FILES['uploaded_file']['name'][$file];
-            $fileExt = "." . strtolower(substr(strrchr($fileName, '.'), 1));
-
-            if (!in_array($fileExt, $validExt)) {
-                echo "Le fichier n'est pas une image !";
-                die;
+                if (strlen($fileName)) {
+                    $fileExt = "." . strtolower(substr(strrchr($fileName, '.'), 1));
+                    if (!in_array($fileExt, $valid_formats)) {
+                        $uniqueName = $i++ . "." . $annonceId;
+                        $fileNamee = $uniqueName . $fileExt;
+                        move_uploaded_file($tmpName, $path . $fileNamee);
+                    }
+                }
+                $i++;
             }
-
-            $tmpName = $_FILES['uploaded_file']['tmp_name'][$file];
-            $fileName = "upload/" . $annonceId . $fileExt;
-            $resultat = move_uploaded_file($tmpName, $fileName);
-        }
-        if ($resultat) {
-            echo "Image transféré";
         }
     }
 
