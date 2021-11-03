@@ -13,7 +13,7 @@ class Database
         //User name
         if(!defined('USER')) define('USER', 'root');
         //Password
-        if(!defined('PASSWD')) define('PASSWD', 'root');
+        if(!defined('PASSWD')) define('PASSWD', '');
         //Database name
         if(!defined('DBNAME')) define('DBNAME', 'le_bon_koin');
 

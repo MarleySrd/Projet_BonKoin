@@ -1,5 +1,5 @@
 <?php
-require_once ('Database.php');
+require_once('Database.php');
 
 class AnnonceModel extends Database
 {
@@ -184,32 +184,37 @@ class AnnonceModel extends Database
         $return = array();
         $return["errors"] = array();
         $return["value"] = array();
+
         @$titre_annonce = $_POST['titre_annonce'];
         if ($titre_annonce == "") {
             $return["errors"]['titre_annonce'] = "Le titre est obligatoire";
         } else {
             $return["value"]['titre_annonce'] = $titre_annonce;
         }
+
         @$desc_annonce = $_POST['desc_annonce'];
         if ($desc_annonce == "") {
             $return["errors"]['desc_annonce'] = "La description est obligatoire";
         } else {
             $return["value"]['desc_annonce'] = $desc_annonce;
         }
+
         @$prix_annonce = $_POST['prix_annonce'];
         if ($prix_annonce == "") {
             $return["errors"]['prix_annonce'] = "Le prix est obligatoire";
         } else {
             $return["value"]['prix_annonce'] = $prix_annonce;
         }
+
         @$adresse_annonce = $_POST['adresse_annonce'];
         if ($adresse_annonce == "") {
             $return["errors"]['adresse_annonce'] = "L'adresse est obligatoire";
         } else {
             $return["value"]['adresse_annonce'] = $adresse_annonce;
         }
+
         @$id_categorie = $_POST['id_categorie'];
-        if (! isset($this->criteres[$id_categorie])) {
+        if (!isset($this->criteres[$id_categorie])) {
             $return["errors"]['id_categorie'] = "La catégorie est invalide";
             if ($id_categorie == '3') {
                 $return["errors"]['id_categorie'] = "Veuillez choisir une sous-catégorie";
@@ -222,6 +227,7 @@ class AnnonceModel extends Database
         if (count($return["errors"]) > 0) {
             return $return;
         }
+
         $db = $this->connect();
         $sql = 'INSERT INTO annonce ( titre_annonce,  desc_annonce,  prix_annonce,  adresse_annonce,  id_categorie,  id_user)
                              VALUES (:titre_annonce, :desc_annonce, :prix_annonce, :adresse_annonce, :id_categorie, :id_user)';
@@ -249,6 +255,33 @@ class AnnonceModel extends Database
             }
         }
         return false;
+
+        // IMAGES INSERT
+
+        $sql = 'INSERT INTO photo (id_annonce) VALUES (:id_annonce)';
+        $query = $db->prepare($sql);
+        $query->bindValue(':id_annonce', $annonceId, PDO::PARAM_STR);
+
+        foreach ($_FILES['uploaded_file']['tmp_name'] as $file => $image) {
+
+            $validExt = ['.jpg', '.jpeg', '.png'];
+
+            // Vérifie si les fichiers sont bien des images
+            $fileName = $_FILES['uploaded_file']['name'][$file];
+            $fileExt = "." . strtolower(substr(strrchr($fileName, '.'), 1));
+
+            if (!in_array($fileExt, $validExt)) {
+                echo "Le fichier n'est pas une image !";
+                die;
+            }
+
+            $tmpName = $_FILES['uploaded_file']['tmp_name'][$file];
+            $fileName = "upload/" . $annonceId . $fileExt;
+            $resultat = move_uploaded_file($tmpName, $fileName);
+        }
+        if ($resultat) {
+            echo "Image transféré";
+        }
     }
 
     public function deleteAnnonce($idAnnonce)

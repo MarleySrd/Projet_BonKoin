@@ -35,6 +35,11 @@ class UserModel extends Database
 
     public function signin($login, $mail, $pwd)
     {
+        $password = $_POST['pwd'];
+    $pattern = '/^(?=.*[!@#$%^&*-])(?=.*[0-9])(?=.*[A-Z]).{8,20}$/';
+
+    if (!preg_match($pattern, $password)) {
+    } else {
         // On écrit la requête
         $sql = 'INSERT INTO user (nom_user, email_user, pwd_user) VALUES (:nom_user, :email_user, :pwd_user)';
         // On prépare la requête
@@ -46,8 +51,10 @@ class UserModel extends Database
         $query->bindValue(':pwd_user', $pwd, PDO::PARAM_STR);
         // On exécute la requête
         $query->execute();
+
+        
     }
 
-  
+}
 }
 
