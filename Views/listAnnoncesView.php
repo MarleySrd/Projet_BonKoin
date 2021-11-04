@@ -9,14 +9,10 @@ ob_start();
 		// si tableau vide afficher 'aucune annonce'
 		foreach ($annoncesList as $annonce) {
 		?>
-<<<<<<< HEAD
-			<div class="card m-2">
-				<img class="card-img-top img-fluid" src="Assets/img/uploads/1.<?= $annonce['id_annonce'] ?>.png" alt="<?= $annonce['titre_annonce'] ?>">
-=======
 
 			<div class="card m-2" style="width: 18rem;">
 				<?php
-				if (file_exists(__DIR__ . "/../Assets/img/annonces/" . $annonce['id_annonce'] . ".png")) {
+				if (file_exists(__DIR__ . "/../Assets/img/uploads/1." . $annonce['id_annonce'] . ".png")) {
 					$imagPath = "Assets/img/annonces/" . $annonce['id_annonce'] . ".png";
 				} else {
 					$imagPath = "Assets/img/annonces/no-pict.png";
@@ -24,7 +20,6 @@ ob_start();
 				?>
 
 				<img class="card-img-top img-fluid" style="height: 300px; object-fit: contain;" src="<?= $imagPath ?>" alt="<?= $annonce['titre_annonce'] ?>">
->>>>>>> 86b0ec96c1b68d16be70e34e1fefee983149d034
 				<div class="card-body">
 					<h5 class="card-title"><?= $annonce['titre_annonce'] ?></h5>
 					<h6 class="card-subtitle"><?= $annonce['prix_annonce'] ?> €</h6>
