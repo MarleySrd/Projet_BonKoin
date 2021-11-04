@@ -63,7 +63,7 @@ class AnnonceModel extends Database
         // add each field
         if ($q->rowCount() > 0) {
             while ($field = $q->fetch(PDO::FETCH_ASSOC)) {
-                $annonce[$field['nom_critere']] = $field['valeur_critere'];
+                $annonce['critere_'.$field['nom_critere']] = $field['valeur_critere'];
             }
         }
         return $annonce;
@@ -232,19 +232,29 @@ class AnnonceModel extends Database
                 $q->execute();
             }
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe1d45f17ed0aff4d06324c4ecf0e827a8b3d563
         // IMAGES INSERT
         $i = 1;
         if (isset($_POST['submit'])) {
             foreach ($_FILES['photos_annonce']['tmp_name'] as $file => $image) {
+<<<<<<< HEAD
                 $randomNumber = $i++;
                 $valid_formats = ["jpg", "png", "gif", "bmp"];
                 $path = "./Assets/img/uploads/";
+=======
+                $valid_formats = ["jpg", "png", "gif", "bmp"];
+                $path = "./Assets/img/annonces/";
+>>>>>>> fe1d45f17ed0aff4d06324c4ecf0e827a8b3d563
                 $fileName = $_FILES['photos_annonce']['name'][$file];
                 $tmpName = $_FILES['photos_annonce']['tmp_name'][$file];
 
                 if (strlen($fileName)) {
                     $fileExt = "." . strtolower(substr(strrchr($fileName, '.'), 1));
                     if (!in_array($fileExt, $valid_formats)) {
+<<<<<<< HEAD
                         $uniqueName = $randomNumber . "." . $annonceId;
                         $fileNamee = $uniqueName . $fileExt;
                         move_uploaded_file($tmpName, $path . $fileNamee);
@@ -253,6 +263,18 @@ class AnnonceModel extends Database
                 
             }
         }
+=======
+                        $uniqueName = $annonceId.'-'.$i++ . $fileExt;
+                        move_uploaded_file($tmpName, $path . $uniqueName);
+                    }
+                }
+                if ($i==10){
+                    break;
+                }
+            }
+        }
+        return false;
+>>>>>>> fe1d45f17ed0aff4d06324c4ecf0e827a8b3d563
     }
 
     public function deleteAnnonce($idAnnonce)

@@ -77,13 +77,13 @@ ob_start();
 						<select class="form-select" id="categorie" name="id_categorie" onchange="updateCategories();">
 							<option value="0">---</option>
 							<?php
-							foreach ($listCategories as $categorie) {
+							foreach ($listCategories as $id_categorie=>$libelle_categorie) {
 							?>
-								<option value="<?= $categorie['id_categorie']; ?>" <?php if (isset($errors['value']['id_categorie']) && ($categorie['id_categorie'] == $errors['value']['id_categorie'])) {
+								<option value="<?= $id_categorie; ?>" <?php if (isset($errors['value']['id_categorie']) && ($id_categorie == $errors['value']['id_categorie'])) {
 																						echo 'selected';
 																					} ?>>
-									<?php if (strlen($categorie['id_categorie']) > 1) echo '---'; ?>
-									<?= $categorie['libelle_categorie']; ?></option>
+									<?php if (strlen($id_categorie) > 1) echo '---'; ?>
+									<?= $libelle_categorie; ?></option>
 							<?php } ?>
 						</select> <label for="categorie">Catégorie de l'annonce</label>
 						<?php if (isset($errors['errors']['id_categorie'])) { ?>
