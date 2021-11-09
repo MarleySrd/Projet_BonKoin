@@ -35,11 +35,7 @@ ob_start();
 						<input class="form-control" id="pwd" name="pwd" type="password"
 							placeholder="Mot de passe" required="required" /> <label
 							for="pwd">Mot de passe</label>
-<<<<<<< HEAD
-						<small class="form-text text-muted">Le mot de passe nécessite une majuscule, un chiffre, et un caractère spécial</small>
-=======
 							<small class="form-text text-muted">Le mot de passe de 8 caractères minimum nécessite une majuscule, un chiffre, et un caractère spécial.</small>
->>>>>>> fe1d45f17ed0aff4d06324c4ecf0e827a8b3d563
 					</div>
 					<?php if (isset($errorPassword)){ ?>
 						<div id="submitErrorMessage">

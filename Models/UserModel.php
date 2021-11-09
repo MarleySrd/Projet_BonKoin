@@ -1,5 +1,5 @@
 <?php
-require_once ('Database.php');
+require_once('Database.php');
 
 class UserModel extends Database
 {
@@ -20,7 +20,7 @@ class UserModel extends Database
         $user = $query->fetch(PDO::FETCH_ASSOC);
 
         // Première étape nous allons vérifier si l'utlisateur existe bel et bien
-        if (! $user) {
+        if (!$user) {
             echo 'Désolé cet utilisateur n\'existe pas!';
         } else {
             // On utilise password_verify pour s'assurer que le mot de passe saisie est bien celui que nous avons en crypté dans la base de données
@@ -36,28 +36,23 @@ class UserModel extends Database
     public function signin($login, $mail, $pwd)
     {
         $password = $_POST['pwd'];
-    $pattern = '/^(?=.*[!@#$%^&*-])(?=.*[0-9])(?=.*[A-Z]).{8,20}$/';
+        $pattern = '/^(?=.*[!@#$%^&*-])(?=.*[0-9])(?=.*[A-Z]).{8,20}$/';
 
-    if (!preg_match($pattern, $password)) {
-    } else {
-        // On écrit la requête
-        $sql = 'INSERT INTO user (nom_user, email_user, pwd_user) VALUES (:nom_user, :email_user, :pwd_user)';
-        // On prépare la requête
-        $db = $this->connect();
-        $query = $db->prepare($sql);
-        // On injecte (terme scientifique) les valeurs
-        $query->bindValue(':nom_user', $login, PDO::PARAM_STR);
-        $query->bindValue(':email_user', $mail, PDO::PARAM_STR);
-        $query->bindValue(':pwd_user', $pwd, PDO::PARAM_STR);
-        // On exécute la requête
-        $query->execute();
-
-        
+        if (!preg_match($pattern, $password)) {
+        } else {
+            // On écrit la requête
+            $sql = 'INSERT INTO user (nom_user, email_user, pwd_user) VALUES (:nom_user, :email_user, :pwd_user)';
+            // On prépare la requête
+            $db = $this->connect();
+            $query = $db->prepare($sql);
+            // On injecte (terme scientifique) les valeurs
+            $query->bindValue(':nom_user', $login, PDO::PARAM_STR);
+            $query->bindValue(':email_user', $mail, PDO::PARAM_STR);
+            $query->bindValue(':pwd_user', $pwd, PDO::PARAM_STR);
+            // On exécute la requête
+            $query->execute();
+        }
     }
-
-<<<<<<< HEAD
-}
-=======
     function getUser($userId)
     {
         // On écrit la requête
@@ -71,8 +66,4 @@ class UserModel extends Database
         $user = $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-
-  
->>>>>>> fe1d45f17ed0aff4d06324c4ecf0e827a8b3d563
 }
-
