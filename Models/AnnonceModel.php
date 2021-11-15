@@ -1,11 +1,12 @@
 <?php
-require_once ('Database.php');
+require_once('Database.php');
 
 class AnnonceModel extends Database
 {
 
     // criteres en fonction des id des categories
     public $criteres = [
+        "0" => [],
         "1" => [
             "type-de-bien",
             "surface",
@@ -63,30 +64,31 @@ class AnnonceModel extends Database
         // add each field
         if ($q->rowCount() > 0) {
             while ($field = $q->fetch(PDO::FETCH_ASSOC)) {
-                $annonce[$field['nom_critere']] = $field['valeur_critere'];
+                $annonce['critere_' . $field['nom_critere']] = $field['valeur_critere'];
             }
         }
         return $annonce;
     }
-    
+
     // list all annonces, search without critere
     // search annonces
     public function searchAnnonces()
     {
         $db = $this->connect();
-        $tables = "annonce";
-        $sql = '';
+        $sql = 'SELECT annonce.id_annonce FROM annonce WHERE 1=1 ';
         // terms on titre and desc
         if (isset($_GET['terms'])) {
             $sql .= "AND (annonce.titre_annonce LIKE CONCAT('%', :terms_titre, '%') ";
-            $sql .= "OR annonce.desc_annonce LIKE CONCAT('%', :terms_desc, '%') ";
+            $sql .= "OR annonce.desc_annonce LIKE CONCAT('%', :terms_desc, '%')) ";
         }
         // user
         if (isset($_GET['id_user'])) {
             $sql .= 'AND annonce.id_user = :id_user ';
         }
         // categorie
-        if (isset($_GET['id_categorie'])) {
+        $categorie = '0';
+        if (isset($_GET['id_categorie']) && !empty($_GET['id_categorie'])) {
+            $categorie = $_GET['id_categorie'];
             $sql .= "AND annonce.id_categorie LIKE CONCAT(:id_categorie, '%') ";
         }
         // prix
@@ -95,21 +97,25 @@ class AnnonceModel extends Database
             $sql .= 'AND annonce.prix_annonce = :prix_annonce ';
         }
         // adresse
-        if (isset($_GET['adresse_annonce'])) {
-            $sql .= 'AND annonce.adresse_annonce = :adresse_annonce ';
+        if (isset($_GET['adresse_annonce']) && !empty($_GET['adresse_annonce'])) {
+            $sql .= "AND annonce.adresse_annonce LIKE CONCAT('%', :adresse_annonce, '%')";
         }
         // Others criteres
         foreach ($_GET as $key => $value) {
             // filter on key name (set in form)
             if (strpos($key, 'critere_') === 0) {
-                $tables .= ', critere ';
-                $sql .= ' AND annonce.id_annonce = critere.id_annonce ';
-                $sql .= ' AND critere.nom_critere = :nom_critere ';
-                $sql .= ' AND critere.valeur_critere = :valeur_critere ';
+                if (!empty($value)) {
+                    if (in_array(substr($key, 8), $this->criteres[$categorie])) {
+                        $sql .= ' AND annonce.id_annonce IN (';
+                        $sql .= ' SELECT critere.id_annonce FROM critere ';
+                        $sql .= ' WHERE critere.nom_critere = \'' . substr($key, 8) . '\'';
+                        $sql .= ' AND critere.valeur_critere = \'' . $value . '\' )';
+                    }
+                }
             }
         }
 
-        $sql = 'SELECT annonce.id_annonce FROM ' . $tables . ' WHERE 1=1 ' . $sql;
+
         $query = $db->prepare($sql);
         // bind param
         // terms on titre and desc
@@ -122,7 +128,7 @@ class AnnonceModel extends Database
             $query->bindValue(':id_user', $_GET['id_user'], PDO::PARAM_INT);
         }
         // categorie
-        if (isset($_GET['id_categorie'])) {
+        if (isset($_GET['id_categorie']) && !empty($_GET['id_categorie'])) {
             $query->bindValue(':id_categorie', $_GET['id_categorie'], PDO::PARAM_INT);
         }
         // prix
@@ -131,17 +137,19 @@ class AnnonceModel extends Database
             $query->bindValue(':prix_annonce', $_GET['prix_annonce'], PDO::PARAM_STR);
         }
         // adresse
-        if (isset($_GET['adresse_annonce'])) {
+        if (isset($_GET['adresse_annonce']) && !empty($_GET['adresse_annonce'])) {
             $query->bindValue(':adresse_annonce', $_GET['adresse_annonce'], PDO::PARAM_STR);
         }
         // Others criteres
-        foreach ($_GET as $key => $value) {
-            // filter on key name (set in form)
-            if (strpos($key, 'critere_') === 0) {
-                $query->bindValue(':nom_critere', $_GET['critere_nom_critere'], PDO::PARAM_STR);
-                $query->bindValue(':valeur_critere', $_GET['critere_valeur_critere'], PDO::PARAM_STR);
-            }
-        }
+        // foreach ($_GET as $key => $value) {
+        //     // filter on key name (set in form)
+        //     if (strpos($key, 'critere_') === 0) {
+        //         if (!empty($value)) {
+        //             $query->bindValue(':nom_critere', substr($key, 8), PDO::PARAM_STR);
+        //             $query->bindValue(':valeur_critere', $value, PDO::PARAM_STR);
+        //         }
+        //     }
+        // }
 
         // echo $query->debugDumpParams();
         // exit();
@@ -187,7 +195,7 @@ class AnnonceModel extends Database
             $return["value"]['adresse_annonce'] = $adresse_annonce;
         }
         @$id_categorie = $_POST['id_categorie'];
-        if (! isset($this->criteres[$id_categorie])) {
+        if (!isset($this->criteres[$id_categorie])) {
             $return["errors"]['id_categorie'] = "La catégorie est invalide";
             if ($id_categorie == '3') {
                 $return["errors"]['id_categorie'] = "Veuillez choisir une sous-catégorie";
@@ -224,6 +232,28 @@ class AnnonceModel extends Database
                 $q->bindValue(':nom_critere', $critere, PDO::PARAM_STR);
                 $q->bindValue(':valeur_critere', $_POST['critere_' . $critere], PDO::PARAM_STR);
                 $q->execute();
+            }
+        }
+
+        // IMAGES INSERT
+        $i = 1;
+        if (isset($_POST['submit'])) {
+            foreach ($_FILES['photos_annonce']['tmp_name'] as $file => $image) {
+                $valid_formats = ["jpg", "png", "gif", "bmp"];
+                $path = "./Assets/img/annonces/";
+                $fileName = $_FILES['photos_annonce']['name'][$file];
+                $tmpName = $_FILES['photos_annonce']['tmp_name'][$file];
+
+                if (strlen($fileName)) {
+                    $fileExt = "." . strtolower(substr(strrchr($fileName, '.'), 1));
+                    if (!in_array($fileExt, $valid_formats)) {
+                        $uniqueName = $annonceId . '-' . $i++ . $fileExt;
+                        move_uploaded_file($tmpName, $path . $uniqueName);
+                    }
+                }
+                if ($i == 10) {
+                    break;
+                }
             }
         }
         return false;
