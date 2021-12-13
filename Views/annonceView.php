@@ -33,8 +33,16 @@ $criteresNames = [
 					<em>Catégorie : </em><b><?= $listCategories[$annonce['id_categorie']] ?></b>
 				</p>
 				<p>
-					<span>Vendeur : <?= $user['email_user'] ?><br> <a href="?search&id_user=<?= $user['id_user'] ?>">Voir les annonces du
-							vendeur</a> <a href="mailto:<?= $user['email_user'] ?>" target="_blank" class="btn btn-primary">Contacter le vendeur</a></span>
+					<span>Vendeur : <?= $user['nom_user'] ?><br> <a href="?search&id_user=<?= $user['id_user'] ?>">Voir les annonces du vendeur</a></span>
+
+					<span>
+						<form method="GET">
+							<input type="email" name="mail" placeholder="votre adresse mail">
+							<input type="text" name="object" placeholder="l'objet du message">
+							<textarea type="text" name="message" placeholder="Votre message ici" rows="4" cols="50" minlength="10" maxlength="120" style="resize: none;"></textarea>
+							<input type="submit" name="action" value="Envoyer">
+						</form>
+					</span>
 				</p>
 				<p class="lead ">
 					<strong><?= $annonce['prix_annonce'] ?> €</strong>
@@ -102,10 +110,13 @@ $criteresNames = [
 				<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDVpf8cNScpvRrJzvbhjjkIuA_blKGFPlQ&q=<?= str_replace(' ', '+', $annonce['adresse_annonce']) ?>" width="100%" height="450" style="border: 0;" allowfullscreen="" loading="lazy"></iframe>
 			</div>
 		</div>
-		
+
 	</div>
 
 </section>
+
+<script>
+</script>
 
 
 

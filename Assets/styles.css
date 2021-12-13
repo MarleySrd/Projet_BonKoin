@@ -12,6 +12,7 @@
   margin: 15px;
   overflow-y: auto;
 }
+
 /* .new-annonce{
   display: block;
   height: calc(100vh - 300px);
@@ -11349,12 +11350,12 @@ html {
   font-size: 1.8rem;
   line-height: 1.2rem;
 }
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .page-section .page-section-heading {
-    /* font-size: 3rem;
-    line-height: 2.5rem; */
+    font-size: 3rem;
+    line-height: 2.5rem;
   }
-}
+}*/
 /*personal style*/
 @media (max-width: 992px) {
   .page-section .page-section-heading {

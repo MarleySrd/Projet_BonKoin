@@ -26,9 +26,9 @@ ob_start();
 						<?php } ?>
 					</div>
 					<div class="form-floating mb-3">
-						<textarea class="form-control" id="desc" name="desc_annonce" placeholder="Description de l'annonce" style="height: 10rem"><?php if (isset($errors['value']['desc_annonce'])) {
-																																						echo $errors['value']['desc_annonce'];
-																																					} ?></textarea>
+						<textarea class="form-control" id="desc" name="desc_annonce" placeholder="Description de l'annonce" style="height: 10rem; resize:none;"><?php if (isset($errors['value']['desc_annonce'])) {
+																																									echo $errors['value']['desc_annonce'];
+																																								} ?></textarea>
 						<label for="desc">Description de l'annonce</label>
 						<?php if (isset($errors['errors']['desc_annonce'])) { ?>
 							<div class="invalid-feedback"><?= $errors['errors']['desc_annonce']; ?></div>
@@ -44,17 +44,15 @@ ob_start();
 						<?php } ?>
 					</div>
 
-					<input class="form-control" id="photos" type="file" name="photos_annonce[]" placeholder="Ajoutez des photos à votre annonce" multiple/>
-						<label for="photos">Photos de l'annonce</label>
+					<input class="form-control" id="photos" type="file" name="photos_annonce[]" placeholder="Ajoutez des photos à votre annonce" multiple />
+					<label for="photos">Photos de l'annonce</label>
 
 					<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 					<script src="https://vicopo.selfbuild.fr/vicopo.min.js"></script>
 					<div class="form-floating mb-3">
-						<input class="form-control"
-						id="adresse" type="text" 
-						name="adresse_annonce" 
-						placeholder="Entrer une ville ou un code postal" 
-						value="<?php if (isset($errors['value']['adresse_annonce'])) {	echo $errors['value']['adresse_annonce'];} ?>" />
+						<input class="form-control" id="adresse" type="text" name="adresse_annonce" placeholder="Entrer une ville ou un code postal" value="<?php if (isset($errors['value']['adresse_annonce'])) {
+																																								echo $errors['value']['adresse_annonce'];
+																																							} ?>" />
 						<ul>
 							<!--Affichage de la liste à partir de 2 caractères saisis-->
 							<li data-vicopo="#adresse" data-vicopo-click='{"#adresse": "code - ville"}'>
@@ -77,11 +75,11 @@ ob_start();
 						<select class="form-select" id="categorie" name="id_categorie" onchange="updateCategories();">
 							<option value="0">---</option>
 							<?php
-							foreach ($listCategories as $id_categorie=>$libelle_categorie) {
+							foreach ($listCategories as $id_categorie => $libelle_categorie) {
 							?>
 								<option value="<?= $id_categorie; ?>" <?php if (isset($errors['value']['id_categorie']) && ($id_categorie == $errors['value']['id_categorie'])) {
-																						echo 'selected';
-																					} ?>>
+																			echo 'selected';
+																		} ?>>
 									<?php if (strlen($id_categorie) > 1) echo '---'; ?>
 									<?= $libelle_categorie; ?></option>
 							<?php } ?>
